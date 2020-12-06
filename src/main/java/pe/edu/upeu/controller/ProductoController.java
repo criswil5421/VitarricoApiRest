@@ -20,6 +20,15 @@ public class ProductoController {
     @Autowired
     ProductoService productoService;
 
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/lista2")
+    public ResponseEntity<List<Producto>> list2(){
+        System.out.println("hola mundo");
+        List<Producto> list = productoService.list();
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
     @GetMapping("/lista")
     public ResponseEntity<List<Producto>> list(){
         System.out.println("hola mundo");
