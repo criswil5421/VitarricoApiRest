@@ -42,11 +42,11 @@ public class ServPeriodoController {
         return new ResponseEntity(list, HttpStatus.OK);
     }
 
-    @GetMapping("/detail/{id}")
-    public ResponseEntity<ServPeriodo> getById(@PathVariable("id") int id){
-        if(!periodoService.existsById(id))
+    @GetMapping("/detail/{idPeriodo}")
+    public ResponseEntity<ServPeriodo> getById(@PathVariable("idPeriodo") int idPeriodo){
+        if(!periodoService.existsById(idPeriodo))
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-        ServPeriodo producto = periodoService.getOne(id).get();
+        ServPeriodo producto = periodoService.getOne(idPeriodo).get();
         return new ResponseEntity(producto, HttpStatus.OK);
     }
 
@@ -70,25 +70,25 @@ public class ServPeriodoController {
     }    
    
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable("id")int id, @RequestBody ServPeriodo periodo){
-        if(!periodoService.existsById(id))
+    @PutMapping("/update/{idPeriodo}")
+    public ResponseEntity<?> update(@PathVariable("idPeriodo")int idPeriodo, @RequestBody ServPeriodo periodo){
+        if(!periodoService.existsById(idPeriodo))
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-        if(periodoService.existsByPeriodo(periodo.getPeriodo()) && periodoService.getByPeriodo(periodo.getPeriodo()).get().getIdPeriodo()!= id)
+        if(periodoService.existsByPeriodo(periodo.getPeriodo()) && periodoService.getByPeriodo(periodo.getPeriodo()).get().getIdPeriodo()!= idPeriodo)
             return new ResponseEntity(new Mensaje("ese periodo ya existe"), HttpStatus.BAD_REQUEST);
         if(StringUtils.isBlank(periodo.getPeriodo()))
             return new ResponseEntity(new Mensaje("el nombre de periodo es obligatorio"), HttpStatus.BAD_REQUEST);
-        periodo.setIdPeriodo(periodoService.getOne(id).get().getIdPeriodo());
+        periodo.setIdPeriodo(periodoService.getOne(idPeriodo).get().getIdPeriodo());
         periodoService.save(periodo);
         return new ResponseEntity(new Mensaje("Periodo actualizado"), HttpStatus.OK);
     }
     
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id")int id){
-        if(!periodoService.existsById(id))
+    @DeleteMapping("/delete/{idPeriodo}")
+    public ResponseEntity<?> delete(@PathVariable("idPeriodo")int idPeriodo){
+        if(!periodoService.existsById(idPeriodo))
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-        periodoService.delete(id);
+        periodoService.delete(idPeriodo);
         return new ResponseEntity(new Mensaje("Periodo eliminado"), HttpStatus.OK);
     }    
     

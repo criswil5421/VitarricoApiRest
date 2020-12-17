@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Date;
@@ -49,7 +50,7 @@ public class Producto1 implements Serializable {
     private String productoNombre;
     @Basic(optional = false)
     @Column(name = "producto_precio")
-    private BigInteger productoPrecio;
+    private BigDecimal productoPrecio;
     @Basic(optional = false)
     @Column(name = "producto_ingreso")
     @Temporal(TemporalType.DATE)

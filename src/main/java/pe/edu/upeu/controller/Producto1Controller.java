@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/producto1")
+@RequestMapping("/pro1")
 @CrossOrigin(origins = "*")
 public class Producto1Controller {
 

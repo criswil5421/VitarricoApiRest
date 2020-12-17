@@ -25,6 +25,10 @@ public class TiendaService {
     }
 
 
+    public Optional<Tienda> getByNombre(String tiendaNombre){
+        return TiendaRepository.findByTiendaNombre(tiendaNombre);
+    }
+
     public void  save(Tienda tienda){
         TiendaRepository.save(tienda);
     }
@@ -37,4 +41,7 @@ public class TiendaService {
         return TiendaRepository.existsById(tiendaId);
     }
 
+    public boolean existsByNombre(String tiendaNombre){
+        return TiendaRepository.existsByTiendaNombre(tiendaNombre);
+    }
 }

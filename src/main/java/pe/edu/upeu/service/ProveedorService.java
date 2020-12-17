@@ -40,7 +40,7 @@ public class ProveedorService {
         return ProveedorRepository.existsById(proveedorId);
     }
 
-    public boolean existsByProveedorNombre(String almacenNombre){
+    public boolean existsByNombre(String almacenNombre){
         return ProveedorRepository.existsByProveedorNombre(almacenNombre);
     }
 }
