@@ -43,10 +43,11 @@ public class Pedido implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pedido_id")
     private Integer pedidoId;
+
     @Basic(optional = false)
     @Column(name = "pedido_fecha")
-    @Temporal(TemporalType.DATE)
-    private Date pedidoFecha;
+    private String pedidoFecha;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidoId")
     @JsonIgnore
     private Collection<DetalleEntrada> detalleEntradaCollection;

@@ -43,16 +43,19 @@ public class MateriaPrima implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "materia_id")
     private Integer materiaId;
+
     @Basic(optional = false)
     @Column(name = "materia_nombre")
     private String materiaNombre;
+
     @Basic(optional = false)
     @Column(name = "materia_cantidad")
     private String materiaCantidad;
+
     @Basic(optional = false)
     @Column(name = "materia_ingreso")
-    @Temporal(TemporalType.DATE)
-    private Date materiaIngreso;
+    private String materiaIngreso;
+
     @JoinColumn(name = "almacen_id", referencedColumnName = "almacen_id")
     @ManyToOne(optional = false)
     private Almacen almacenId;

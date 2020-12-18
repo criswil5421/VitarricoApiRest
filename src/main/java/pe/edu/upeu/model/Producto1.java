@@ -53,8 +53,7 @@ public class Producto1 implements Serializable {
     private BigDecimal productoPrecio;
     @Basic(optional = false)
     @Column(name = "producto_ingreso")
-    @Temporal(TemporalType.DATE)
-    private Date productoIngreso;
+    private String productoIngreso;
     @Basic(optional = false)
     @Column(name = "producto_cantidad")
     private String productoCantidad;
