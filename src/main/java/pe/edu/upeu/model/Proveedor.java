@@ -49,7 +49,7 @@ public class Proveedor implements Serializable {
     private String proveedorCorreo;
     @Basic(optional = false)
     @Column(name = "proveedor_telefono")
-    private String proveedorTelefono;
+        private String proveedorTelefono;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "proveedorId")
     @JsonIgnore
     private Collection<Pedido> pedidoCollection;

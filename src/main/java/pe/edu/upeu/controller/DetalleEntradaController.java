@@ -2,6 +2,10 @@ package pe.edu.upeu.controller;
 
 import pe.edu.upeu.dto.Mensaje;
 import pe.edu.upeu.model.DetalleEntrada;
+
+import pe.edu.upeu.service.DetalleEntradaService;
+import pe.edu.upeu.service.MateriaPrimaService;
+import pe.edu.upeu.service.PedidoService;
 import pe.edu.upeu.service.DetalleEntradaService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,13 @@ public class DetalleEntradaController {
 
     @Autowired
     DetalleEntradaService DetalleEntradaService;
+
+    @Autowired
+    MateriaPrimaService MateriaService;
+
+
+    @Autowired
+    PedidoService PedidoService;
 
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -45,12 +56,12 @@ public class DetalleEntradaController {
     }
 
 
-    /*@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody DetalleEntrada detalleEntradaDto){
-        if(Integer.isInt(detalleEntradaDto.getMateriaId()))
+        if(Double.isNaN(detalleEntradaDto.getMateriaId().getMateriaId()))
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-        if(Integer.isInt(detalleEntradaDto.getPedidoId()))
+        if(Double.isNaN(detalleEntradaDto.getPedidoId().getPedidoId()))
             return new ResponseEntity(new Mensaje("el precio debe ser mayor que 0"), HttpStatus.BAD_REQUEST);
         //Producto producto = new Producto(productoDto.getNombre(), productoDto.getPrecio());
         //productoService.save(producto);
@@ -58,21 +69,19 @@ public class DetalleEntradaController {
         return new ResponseEntity(new Mensaje("detalleEntrada creado"), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    /*@PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id")int id, @RequestBody DetalleEntrada detalleEntradaDto){
         if(!DetalleEntradaService.existsById(id))
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-        /*if(DetalleEntradaService.existsByNombre(detalleEntradaDto.getNombre()) && DetalleEntradaService.getByNombre(detalleEntradaDto.getNombre()).get().getId() != id)
-            return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
-        if(Integer.isInt(detalleEntradaDto.getMateriaId()))
+        if(Double.isNaN(detalleEntradaDto.getMateriaId().getMateriaId()))
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-        if(Integer.isInt(detalleEntradaDto.getPedidoId()))
+        if(Double.isNaN(detalleEntradaDto.getPedidoId().getPedidoId()))
             return new ResponseEntity(new Mensaje("el precio debe ser mayor que 0"), HttpStatus.BAD_REQUEST);
 
         DetalleEntrada detalleEntrada = DetalleEntradaService.getOne(id).get();
-        DetalleEntrada.setMateriaId(detalleEntradaDto.getMateriaId());
-        DetalleEntrada.setPedidoId(detalleEntradaDto.getPedidoId());
+        DetalleEntrada.setMateriaId(MateriaService.getOne(detalleEntradaDto.getMateriaId().getMateriaId()).get());
+        DetalleEntrada.setPedidoId(PedidoService.getOne(detalleEntradaDto.getPedidoId().getPedidoId()).get());
         DetalleEntradaService.save(detalleEntrada);
         return new ResponseEntity(new Mensaje("detalleEntrada actualizado"), HttpStatus.OK);
     }*/
