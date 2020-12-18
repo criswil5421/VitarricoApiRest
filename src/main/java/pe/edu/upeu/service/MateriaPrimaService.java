@@ -24,6 +24,9 @@ public class MateriaPrimaService {
         return MateriaPrimaRepository.findById(materiaId);
     }
 
+    public Optional<MateriaPrima> getByNombre(String materiaPrima){
+        return MateriaPrimaRepository.findByMateriaNombre(materiaPrima);
+    }
 
     public void  save(MateriaPrima materiaprima){
         MateriaPrimaRepository.save(materiaprima);
@@ -35,6 +38,9 @@ public class MateriaPrimaService {
 
     public boolean existsById(int materiaId){
         return MateriaPrimaRepository.existsById(materiaId);
+    }
+    public boolean existsByNombre(String materiaPrima){
+        return MateriaPrimaRepository.existsByMateriaNombre(materiaPrima);
     }
 
 }

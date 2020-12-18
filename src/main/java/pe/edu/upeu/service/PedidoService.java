@@ -24,6 +24,9 @@ public class PedidoService {
         return PedidoRepository.findById(pedidoId);
     }
 
+    public Optional<Pedido> getByNombre(String pedido){
+        return PedidoRepository.findByPedidoFecha(pedido);
+    }
 
     public void  save(Pedido pedido){
         PedidoRepository.save(pedido);
@@ -37,4 +40,7 @@ public class PedidoService {
         return PedidoRepository.existsById(pedidoId);
     }
 
+    public boolean existsByNombre(String pedido){
+        return PedidoRepository.existsByPedidoFecha(pedido);
+    }
 }

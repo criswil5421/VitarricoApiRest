@@ -8,6 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Integer> {
-    /*Optional<Almacen> findByAlmacenNombre(String nombre);
-    boolean existsByAlmacenNombre(String nombre);*/
+    Optional<Pedido> findByPedidoFecha(String nombre);
+    boolean existsByPedidoFecha(String nombre);
 }

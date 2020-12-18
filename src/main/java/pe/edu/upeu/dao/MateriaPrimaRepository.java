@@ -8,6 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface MateriaPrimaRepository extends JpaRepository<MateriaPrima, Integer> {
-    /*Optional<Almacen> findByAlmacenNombre(String nombre);
-    boolean existsByAlmacenNombre(String nombre);*/
+    Optional<MateriaPrima> findByMateriaNombre(String nombre);
+    boolean existsByMateriaNombre(String nombre);
 }

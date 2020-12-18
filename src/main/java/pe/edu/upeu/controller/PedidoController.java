@@ -44,56 +44,41 @@ public class PedidoController {
         return new ResponseEntity(pedido, HttpStatus.OK);
     }
 
-    /*@GetMapping("/detailname/{nombre}")
-    public ResponseEntity<Producto> getByNombre(@PathVariable("nombre") String nombre){
-        if(!productoService.existsByNombre(nombre))
-            return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-        Producto producto = productoService.getByNombre(nombre).get();
-        return new ResponseEntity(producto, HttpStatus.OK);
-    }
-
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestBody Producto productoDto){
-        if(StringUtils.isBlank(productoDto.getNombre()))
+    public ResponseEntity<?> create(@RequestBody Pedido pedidoDto){
+        if(StringUtils.isBlank(pedidoDto.getPedidoFecha()))
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-        if(Double.isNaN(productoDto.getPrecio()) || productoDto.getPrecio()<0)
-            return new ResponseEntity(new Mensaje("el precio debe ser mayor que 0"), HttpStatus.BAD_REQUEST);
-        if(productoService.existsByNombre(productoDto.getNombre()))
-            return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
-        //Producto producto = new Producto(productoDto.getNombre(), productoDto.getPrecio());
-        //productoService.save(producto);
-        productoService.save(productoDto);
-        return new ResponseEntity(new Mensaje("producto creado"), HttpStatus.OK);
+
+        PedidoService.save(pedidoDto);
+        return new ResponseEntity(new Mensaje("pedido creado"), HttpStatus.OK);
     }
 
     //@PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable("id")int id, @RequestBody Producto productoDto){
-        if(!productoService.existsById(id))
+    public ResponseEntity<?> update(@PathVariable("id")int id, @RequestBody Pedido pedidoDto){
+        if(!PedidoService.existsById(id))
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-        if(productoService.existsByNombre(productoDto.getNombre()) && productoService.getByNombre(productoDto.getNombre()).get().getId() != id)
+        if(PedidoService.existsByNombre(pedidoDto.getPedidoFecha()) && PedidoService.getByNombre(pedidoDto.getPedidoFecha()).get().getPedidoId() != id)
             return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
-        if(StringUtils.isBlank(productoDto.getNombre()))
+        if(StringUtils.isBlank(pedidoDto.getPedidoFecha()))
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-        if(Double.isNaN(productoDto.getPrecio()) || productoDto.getPrecio()<0 )
-            return new ResponseEntity(new Mensaje("el precio debe ser mayor que 0"), HttpStatus.BAD_REQUEST);
 
-        Producto producto = productoService.getOne(id).get();
-        producto.setNombre(productoDto.getNombre());
-        producto.setPrecio(productoDto.getPrecio());
-        productoService.save(producto);
-        return new ResponseEntity(new Mensaje("producto actualizado"), HttpStatus.OK);
+
+        Pedido pedido = PedidoService.getOne(id).get();
+        pedido.setPedidoFecha(pedidoDto.getPedidoFecha());
+        PedidoService.save(pedido);
+        return new ResponseEntity(new Mensaje("Pedido actualizado"), HttpStatus.OK);
     }
 
     //@PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id")int id){
-        if(!productoService.existsById(id))
+        if(!PedidoService.existsById(id))
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-        productoService.delete(id);
-        return new ResponseEntity(new Mensaje("producto eliminado"), HttpStatus.OK);
-    }*/
+        PedidoService.delete(id);
+        return new ResponseEntity(new Mensaje("Pedido eliminado"), HttpStatus.OK);
+    }
 
 
 }

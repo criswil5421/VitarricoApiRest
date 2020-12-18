@@ -24,6 +24,9 @@ public class SalidaService {
         return SalidaRepository.findById(salidaId);
     }
 
+    public Optional<Salida> getByNombre(String salida){
+        return SalidaRepository.findBySalidaFecha(salida);
+    }
 
     public void  save(Salida salida){
         SalidaRepository.save(salida);
@@ -37,4 +40,7 @@ public class SalidaService {
         return SalidaRepository.existsById(salidaId);
     }
 
+    public boolean existsByNombre(String salida){
+        return SalidaRepository.existsBySalidaFecha(salida);
+    }
 }

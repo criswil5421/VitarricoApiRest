@@ -44,56 +44,75 @@ public class Producto1Controller {
         return new ResponseEntity(producto1, HttpStatus.OK);
     }
 
-    /*@GetMapping("/detailname/{nombre}")
-    public ResponseEntity<Producto> getByNombre(@PathVariable("nombre") String nombre){
-        if(!productoService.existsByNombre(nombre))
+    @GetMapping("/detailname/{nombre}")
+    public ResponseEntity<Producto1> getByNombre(@PathVariable("nombre") String nombre){
+        if(!Producto1Service.existsByNombre(nombre))
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-        Producto producto = productoService.getByNombre(nombre).get();
-        return new ResponseEntity(producto, HttpStatus.OK);
+        Producto1 producto1 = Producto1Service.getByNombre(nombre).get();
+        return new ResponseEntity(producto1, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    /*@PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestBody Producto productoDto){
-        if(StringUtils.isBlank(productoDto.getNombre()))
+    public ResponseEntity<?> create(@RequestBody Producto1 producto1Dto){
+        if(StringUtils.isBlank(producto1Dto.getProductoNombre()))
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-        if(Double.isNaN(productoDto.getPrecio()) || productoDto.getPrecio()<0)
+        if(Double.isNaN(producto1Dto.getProductoPrecio()) || producto1Dto.getPrecio()<0)
             return new ResponseEntity(new Mensaje("el precio debe ser mayor que 0"), HttpStatus.BAD_REQUEST);
-        if(productoService.existsByNombre(productoDto.getNombre()))
+        if(StringUtils.isBlank(producto1Dto.getProductoIngreso()))
+            return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+        if(StringUtils.isBlank(producto1Dto.getProductoCantidad()))
+            return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+        if(StringUtils.isBlank(producto1Dto.getProductoDescripcion()))
+            return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+        if(Producto1Service.existsByNombre(producto1Dto.getAlmacenId()))
             return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
-        //Producto producto = new Producto(productoDto.getNombre(), productoDto.getPrecio());
-        //productoService.save(producto);
-        productoService.save(productoDto);
-        return new ResponseEntity(new Mensaje("producto creado"), HttpStatus.OK);
+        if(Producto1Service.existsByNombre(producto1Dto.getProductoNombre()))
+            return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
+
+        Producto1Service.save(producto1Dto);
+        return new ResponseEntity(new Mensaje("Producto1 creado"), HttpStatus.OK);
     }
 
     //@PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable("id")int id, @RequestBody Producto productoDto){
-        if(!productoService.existsById(id))
+    public ResponseEntity<?> update(@PathVariable("id")int id, @RequestBody Producto1 producto1Dto){
+        if(!Producto1Service.existsById(id))
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-        if(productoService.existsByNombre(productoDto.getNombre()) && productoService.getByNombre(productoDto.getNombre()).get().getId() != id)
+        if(Producto1Service.existsByNombre(producto1Dto.getProductoNombre()) && Producto1Service.getByNombre(producto1Dto.getProductoNombre()).get().getProductoId() != id)
             return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
-        if(StringUtils.isBlank(productoDto.getNombre()))
+        if(StringUtils.isBlank(producto1Dto.getProductoNombre()))
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-        if(Double.isNaN(productoDto.getPrecio()) || productoDto.getPrecio()<0 )
+        if(Double.isNaN(producto1Dto.getProductoPrecio()) || producto1Dto.getPrecio()<0)
             return new ResponseEntity(new Mensaje("el precio debe ser mayor que 0"), HttpStatus.BAD_REQUEST);
+        if(StringUtils.isBlank(producto1Dto.getProductoIngreso()))
+            return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+        if(StringUtils.isBlank(producto1Dto.getProductoCantidad()))
+            return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+        if(StringUtils.isBlank(producto1Dto.getProductoDescripcion()))
+            return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+        if(Producto1Service.existsByNombre(producto1Dto.getAlmacenId()))
+            return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
 
-        Producto producto = productoService.getOne(id).get();
-        producto.setNombre(productoDto.getNombre());
-        producto.setPrecio(productoDto.getPrecio());
-        productoService.save(producto);
-        return new ResponseEntity(new Mensaje("producto actualizado"), HttpStatus.OK);
+        Producto1 producto1 = Producto1Service.getOne(id).get();
+        producto1.setProductoNombre(producto1Dto.getProductoNombre());
+        producto1.setProductoPrecio(producto1Dto.getProductoPrecio());
+        producto1.setProductoIngreso(producto1Dto.getProductoIngreso());
+        producto1.setProductoCantidad(producto1Dto.getProductoCantidad());
+        producto1.setProductoDescripcion(producto1Dto.getProductoDescripcion());
+        producto1.getAlmacenId(producto1Dto.getAlmacenId());
+        Producto1Service.save(producto1);
+        return new ResponseEntity(new Mensaje("Producto1 actualizado"), HttpStatus.OK);
     }
-
+*/
     //@PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id")int id){
-        if(!productoService.existsById(id))
+        if(!Producto1Service.existsById(id))
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-        productoService.delete(id);
-        return new ResponseEntity(new Mensaje("producto eliminado"), HttpStatus.OK);
-    }*/
+        Producto1Service.delete(id);
+        return new ResponseEntity(new Mensaje("Producto1 eliminado"), HttpStatus.OK);
+    }
 
 
 }
