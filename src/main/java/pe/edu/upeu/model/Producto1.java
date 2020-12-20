@@ -50,7 +50,7 @@ public class Producto1 implements Serializable {
     private String productoNombre;
     @Basic(optional = false)
     @Column(name = "producto_precio")
-    private BigDecimal productoPrecio;
+    private Double productoPrecio;
     @Basic(optional = false)
     @Column(name = "producto_ingreso")
     private String productoIngreso;

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import pe.edu.upeu.service.AlmacenService;
 
 import java.util.List;
 
@@ -19,6 +20,9 @@ public class Producto1Controller {
 
     @Autowired
     Producto1Service Producto1Service;
+
+    @Autowired
+    AlmacenService AlmacenService;
 
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -52,12 +56,12 @@ public class Producto1Controller {
         return new ResponseEntity(producto1, HttpStatus.OK);
     }
 
-    /*@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody Producto1 producto1Dto){
         if(StringUtils.isBlank(producto1Dto.getProductoNombre()))
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-        if(Double.isNaN(producto1Dto.getProductoPrecio()) || producto1Dto.getPrecio()<0)
+        if(Double.isNaN(producto1Dto.getProductoPrecio()))
             return new ResponseEntity(new Mensaje("el precio debe ser mayor que 0"), HttpStatus.BAD_REQUEST);
         if(StringUtils.isBlank(producto1Dto.getProductoIngreso()))
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
@@ -65,7 +69,7 @@ public class Producto1Controller {
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
         if(StringUtils.isBlank(producto1Dto.getProductoDescripcion()))
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-        if(Producto1Service.existsByNombre(producto1Dto.getAlmacenId()))
+        if(Double.isNaN(producto1Dto.getAlmacenId().getAlmacenId()))
             return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
         if(Producto1Service.existsByNombre(producto1Dto.getProductoNombre()))
             return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
@@ -83,7 +87,7 @@ public class Producto1Controller {
             return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
         if(StringUtils.isBlank(producto1Dto.getProductoNombre()))
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-        if(Double.isNaN(producto1Dto.getProductoPrecio()) || producto1Dto.getPrecio()<0)
+        if(Double.isNaN(producto1Dto.getProductoPrecio()))
             return new ResponseEntity(new Mensaje("el precio debe ser mayor que 0"), HttpStatus.BAD_REQUEST);
         if(StringUtils.isBlank(producto1Dto.getProductoIngreso()))
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
@@ -91,7 +95,7 @@ public class Producto1Controller {
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
         if(StringUtils.isBlank(producto1Dto.getProductoDescripcion()))
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-        if(Producto1Service.existsByNombre(producto1Dto.getAlmacenId()))
+        if(Double.isNaN(producto1Dto.getAlmacenId().getAlmacenId()))
             return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
 
         Producto1 producto1 = Producto1Service.getOne(id).get();
@@ -100,11 +104,11 @@ public class Producto1Controller {
         producto1.setProductoIngreso(producto1Dto.getProductoIngreso());
         producto1.setProductoCantidad(producto1Dto.getProductoCantidad());
         producto1.setProductoDescripcion(producto1Dto.getProductoDescripcion());
-        producto1.getAlmacenId(producto1Dto.getAlmacenId());
+        producto1.setAlmacenId(AlmacenService.getOne(producto1Dto.getAlmacenId().getAlmacenId()).get());
         Producto1Service.save(producto1);
         return new ResponseEntity(new Mensaje("Producto1 actualizado"), HttpStatus.OK);
     }
-*/
+
     //@PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id")int id){

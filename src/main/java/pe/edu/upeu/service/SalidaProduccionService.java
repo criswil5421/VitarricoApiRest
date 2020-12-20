@@ -24,6 +24,9 @@ public class SalidaProduccionService {
         return SalidaProduccionRepository.findById(salproId);
     }
 
+    public Optional<SalidaProduccion> getByNombre(String salidaproduccion){
+        return SalidaProduccionRepository.findBySalproFecha(salidaproduccion);
+    }
 
     public void  save(SalidaProduccion salidaproduccion){
         SalidaProduccionRepository.save(salidaproduccion);
@@ -35,6 +38,10 @@ public class SalidaProduccionService {
 
     public boolean existsById(int salproId){
         return SalidaProduccionRepository.existsById(salproId);
+    }
+
+    public boolean existsByNombre(String salidaproduccion){
+        return SalidaProduccionRepository.existsBySalproFecha(salidaproduccion);
     }
 
 }

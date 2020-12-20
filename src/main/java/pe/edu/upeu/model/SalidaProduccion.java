@@ -45,8 +45,7 @@ public class SalidaProduccion implements Serializable {
     private Integer salproId;
     @Basic(optional = false)
     @Column(name = "salpro_fecha")
-    @Temporal(TemporalType.DATE)
-    private Date salproFecha;
+    private String salproFecha;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "salproId")
     @JsonIgnore
     private Collection<DetalleProduccion> detalleProduccionCollection;

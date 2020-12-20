@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import pe.edu.upeu.service.AlmacenService;
 
 import java.util.List;
 
@@ -19,6 +20,9 @@ public class MateriaPrimaController {
 
     @Autowired
     MateriaPrimaService MateriaPrimaService;
+
+    @Autowired
+    AlmacenService AlmacenService;
 
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -52,7 +56,7 @@ public class MateriaPrimaController {
         return new ResponseEntity(materiaPrima, HttpStatus.OK);
     }
 
-    /*@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody MateriaPrima materiaPrimaDto){
         if(StringUtils.isBlank(materiaPrimaDto.getMateriaNombre()))
@@ -61,7 +65,7 @@ public class MateriaPrimaController {
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
         if(StringUtils.isBlank(materiaPrimaDto.getMateriaIngreso()))
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-        if(StringUtils.isBlank(materiaPrimaDto.getAlmacenId()))
+        if(Double.isNaN(materiaPrimaDto.getAlmacenId().getAlmacenId()))
             return new ResponseEntity(new Mensaje("el precio debe ser mayor que 0"), HttpStatus.BAD_REQUEST);
         if(MateriaPrimaService.existsByNombre(materiaPrimaDto.getMateriaNombre()))
             return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
@@ -83,17 +87,17 @@ public class MateriaPrimaController {
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
         if(StringUtils.isBlank(materiaPrimaDto.getMateriaIngreso()))
                 return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-        if(StringUtils.isBlank(materiaPrimaDto.getAlmacenId()))
+        if(Double.isNaN(materiaPrimaDto.getAlmacenId().getAlmacenId()))
                 return new ResponseEntity(new Mensaje("el precio debe ser mayor que 0"), HttpStatus.BAD_REQUEST);
 
     MateriaPrima materiaPrima = MateriaPrimaService.getOne(id).get();
         materiaPrima.setMateriaNombre(materiaPrimaDto.getMateriaNombre());
         materiaPrima.setMateriaCantidad(materiaPrimaDto.getMateriaCantidad());
         materiaPrima.setMateriaIngreso(materiaPrimaDto.getMateriaIngreso());
-        materiaPrima.setAlmacenId(materiaPrimaDto.getAlmacenId());
+        materiaPrima.setAlmacenId(AlmacenService.getOne(materiaPrimaDto.getAlmacenId().getAlmacenId()).get());
         MateriaPrimaService.save(materiaPrima);
         return new ResponseEntity(new Mensaje("MateriaPrima actualizado"), HttpStatus.OK);
-}*/
+}
 
     //@PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")

@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import pe.edu.upeu.service.TiendaService;
+
 
 import java.util.List;
 
@@ -19,6 +21,10 @@ public class SalidaController {
 
     @Autowired
     SalidaService SalidaService;
+
+    @Autowired
+    TiendaService TiendaService;
+
 
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -57,10 +63,10 @@ public class SalidaController {
     public ResponseEntity<?> create(@RequestBody Salida salidaDto){
         if(StringUtils.isBlank(salidaDto.getSalidaFecha()))
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-
+        if(Double.isNaN(salidaDto.getTiendaId().getTiendaId()))
+            return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
         if(SalidaService.existsByNombre(salidaDto.getSalidaFecha()))
             return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
-
         SalidaService.save(salidaDto);
         return new ResponseEntity(new Mensaje("Salida creado"), HttpStatus.OK);
     }
@@ -74,10 +80,13 @@ public class SalidaController {
             return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
         if(StringUtils.isBlank(salidaDto.getSalidaFecha()))
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+        if(Double.isNaN(salidaDto.getTiendaId().getTiendaId()))
+            return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
 
 
         Salida salida = SalidaService.getOne(id).get();
         salida.setSalidaFecha(salidaDto.getSalidaFecha());
+        salida.setTiendaId(TiendaService.getOne(salidaDto.getTiendaId().getTiendaId()).get());
         SalidaService.save(salida);
         return new ResponseEntity(new Mensaje("Salida actualizado"), HttpStatus.OK);
     }

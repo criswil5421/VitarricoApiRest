@@ -8,6 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface SalidaProduccionRepository extends JpaRepository<SalidaProduccion, Integer> {
-    /*Optional<Almacen> findByAlmacenNombre(String nombre);
-    boolean existsByAlmacenNombre(String nombre);*/
+    Optional<SalidaProduccion> findBySalproFecha(String nombre);
+    boolean existsBySalproFecha(String nombre);
 }

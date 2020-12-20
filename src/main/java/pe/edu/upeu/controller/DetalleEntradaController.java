@@ -69,7 +69,7 @@ public class DetalleEntradaController {
         return new ResponseEntity(new Mensaje("detalleEntrada creado"), HttpStatus.OK);
     }
 
-    /*@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable("id")int id, @RequestBody DetalleEntrada detalleEntradaDto){
         if(!DetalleEntradaService.existsById(id))
@@ -80,11 +80,11 @@ public class DetalleEntradaController {
             return new ResponseEntity(new Mensaje("el precio debe ser mayor que 0"), HttpStatus.BAD_REQUEST);
 
         DetalleEntrada detalleEntrada = DetalleEntradaService.getOne(id).get();
-        DetalleEntrada.setMateriaId(MateriaService.getOne(detalleEntradaDto.getMateriaId().getMateriaId()).get());
-        DetalleEntrada.setPedidoId(PedidoService.getOne(detalleEntradaDto.getPedidoId().getPedidoId()).get());
+        detalleEntrada.setMateriaId(MateriaService.getOne(detalleEntradaDto.getMateriaId().getMateriaId()).get());
+        detalleEntrada.setPedidoId(PedidoService.getOne(detalleEntradaDto.getPedidoId().getPedidoId()).get());
         DetalleEntradaService.save(detalleEntrada);
         return new ResponseEntity(new Mensaje("detalleEntrada actualizado"), HttpStatus.OK);
-    }*/
+    }
 
     //@PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")

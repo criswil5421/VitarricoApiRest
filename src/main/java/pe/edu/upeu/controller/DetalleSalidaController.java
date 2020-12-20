@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import pe.edu.upeu.service.SalidaService;
+import pe.edu.upeu.service.Producto1Service;
 
 import java.util.List;
 
@@ -19,6 +21,13 @@ public class DetalleSalidaController {
 
     @Autowired
     DetalleSalidaService DetalleSalidaService;
+
+    @Autowired
+    Producto1Service Producto1Service;
+
+
+    @Autowired
+    SalidaService SalidaService;
 
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -44,56 +53,45 @@ public class DetalleSalidaController {
         return new ResponseEntity(detallesalida, HttpStatus.OK);
     }
 
-    /*@GetMapping("/detailname/{nombre}")
-    public ResponseEntity<Producto> getByNombre(@PathVariable("nombre") String nombre){
-        if(!productoService.existsByNombre(nombre))
-            return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-        Producto producto = productoService.getByNombre(nombre).get();
-        return new ResponseEntity(producto, HttpStatus.OK);
-    }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestBody Producto productoDto){
-        if(StringUtils.isBlank(productoDto.getNombre()))
+    public ResponseEntity<?> create(@RequestBody DetalleSalida detalleSalidaDto){
+        if(Double.isNaN(detalleSalidaDto.getProductoId().getProductoId()))
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-        if(Double.isNaN(productoDto.getPrecio()) || productoDto.getPrecio()<0)
+        if(Double.isNaN(detalleSalidaDto.getSalidaId().getSalidaId()))
             return new ResponseEntity(new Mensaje("el precio debe ser mayor que 0"), HttpStatus.BAD_REQUEST);
-        if(productoService.existsByNombre(productoDto.getNombre()))
-            return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
-        //Producto producto = new Producto(productoDto.getNombre(), productoDto.getPrecio());
-        //productoService.save(producto);
-        productoService.save(productoDto);
-        return new ResponseEntity(new Mensaje("producto creado"), HttpStatus.OK);
+
+        DetalleSalidaService.save(detalleSalidaDto);
+        return new ResponseEntity(new Mensaje("detalleEntrada creado"), HttpStatus.OK);
     }
 
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable("id")int id, @RequestBody Producto productoDto){
-        if(!productoService.existsById(id))
+    public ResponseEntity<?> update(@PathVariable("id")int id, @RequestBody DetalleSalida detalleSalidaDto){
+        if(!DetalleSalidaService.existsById(id))
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-        if(productoService.existsByNombre(productoDto.getNombre()) && productoService.getByNombre(productoDto.getNombre()).get().getId() != id)
-            return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
-        if(StringUtils.isBlank(productoDto.getNombre()))
+        if(Double.isNaN(detalleSalidaDto.getProductoId().getProductoId()))
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-        if(Double.isNaN(productoDto.getPrecio()) || productoDto.getPrecio()<0 )
+        if(Double.isNaN(detalleSalidaDto.getSalidaId().getSalidaId()))
             return new ResponseEntity(new Mensaje("el precio debe ser mayor que 0"), HttpStatus.BAD_REQUEST);
 
-        Producto producto = productoService.getOne(id).get();
-        producto.setNombre(productoDto.getNombre());
-        producto.setPrecio(productoDto.getPrecio());
-        productoService.save(producto);
-        return new ResponseEntity(new Mensaje("producto actualizado"), HttpStatus.OK);
+        DetalleSalida detalleSalida = DetalleSalidaService.getOne(id).get();
+        detalleSalida.setProductoId(Producto1Service.getOne(detalleSalidaDto.getProductoId().getProductoId()).get());
+        detalleSalida.setSalidaId(SalidaService.getOne(detalleSalidaDto.getSalidaId().getSalidaId()).get());
+        DetalleSalidaService.save(detalleSalida);
+        return new ResponseEntity(new Mensaje("DetalleSalida actualizado"), HttpStatus.OK);
     }
 
     //@PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id")int id){
-        if(!productoService.existsById(id))
+        if(!DetalleSalidaService.existsById(id))
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-        productoService.delete(id);
-        return new ResponseEntity(new Mensaje("producto eliminado"), HttpStatus.OK);
-    }*/
+        DetalleSalidaService.delete(id);
+        return new ResponseEntity(new Mensaje("DetalleSalida eliminado"), HttpStatus.OK);
+    }
+
 
 
 }
