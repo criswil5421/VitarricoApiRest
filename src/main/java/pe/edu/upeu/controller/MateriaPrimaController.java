@@ -49,11 +49,11 @@ public class MateriaPrimaController {
     }
 
     @GetMapping("/detailname/{nombre}")
-    public ResponseEntity<MateriaPrima> getByNombre(@PathVariable("nombre") String nombre){
-        if(!MateriaPrimaService.existsByNombre(nombre))
-            return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-        MateriaPrima materiaPrima = MateriaPrimaService.getByNombre(nombre).get();
-        return new ResponseEntity(materiaPrima, HttpStatus.OK);
+    public ResponseEntity<List<MateriaPrima>> getByNombreLista(@PathVariable("nombre") String nombre){
+        //Proveedor proveedor = ProveedorService.getByNombre(nombre).get();
+        List<MateriaPrima> list = MateriaPrimaService.getByNombreLista(nombre);
+        return new ResponseEntity(list, HttpStatus.OK);
+        //return new ResponseEntity(proveedor, HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ADMIN')")

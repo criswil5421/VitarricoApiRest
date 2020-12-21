@@ -49,11 +49,11 @@ public class Producto1Controller {
     }
 
     @GetMapping("/detailname/{nombre}")
-    public ResponseEntity<Producto1> getByNombre(@PathVariable("nombre") String nombre){
-        if(!Producto1Service.existsByNombre(nombre))
-            return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-        Producto1 producto1 = Producto1Service.getByNombre(nombre).get();
-        return new ResponseEntity(producto1, HttpStatus.OK);
+    public ResponseEntity<List<Producto1>> getByNombreLista(@PathVariable("nombre") String nombre){
+        //Proveedor proveedor = ProveedorService.getByNombre(nombre).get();
+        List<Producto1> list = Producto1Service.getByNombreLista(nombre);
+        return new ResponseEntity(list, HttpStatus.OK);
+        //return new ResponseEntity(proveedor, HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ADMIN')")

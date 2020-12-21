@@ -24,6 +24,10 @@ public class AlmacenService {
         return AlmacenRepository.findById(almacenId);
     }
 
+    public List<Almacen> getByNombreLista(String almacenNombre){
+        return AlmacenRepository.findByAlmacenNombrelista(almacenNombre);
+    }
+
     public Optional<Almacen> getByNombre(String almacenNombre){
         return AlmacenRepository.findByAlmacenNombre(almacenNombre);
     }

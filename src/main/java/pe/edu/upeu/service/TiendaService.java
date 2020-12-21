@@ -29,6 +29,10 @@ public class TiendaService {
         return TiendaRepository.findByTiendaNombre(tiendaNombre);
     }
 
+    public List<Tienda> getByNombreLista(String tiendaNombre){
+        return TiendaRepository.findByTiendaNombrelista(tiendaNombre);
+    }
+
     public void  save(Tienda tienda){
         TiendaRepository.save(tienda);
     }

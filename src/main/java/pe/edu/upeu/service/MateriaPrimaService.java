@@ -28,6 +28,10 @@ public class MateriaPrimaService {
         return MateriaPrimaRepository.findByMateriaNombre(materiaPrima);
     }
 
+    public List<MateriaPrima> getByNombreLista(String materiaNombre){
+        return MateriaPrimaRepository.findByMateriaNombrelista(materiaNombre);
+    }
+
     public void  save(MateriaPrima materiaprima){
         MateriaPrimaRepository.save(materiaprima);
     }
