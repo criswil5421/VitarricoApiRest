@@ -1,15 +1,28 @@
 package pe.edu.upeu.model;
 
-import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import lombok.Data;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Collection;
+import java.util.Date;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Data
@@ -18,23 +31,27 @@ public class Producto implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @Basic(optional = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name = "producto_id")
+    private Integer productoId;
     @Basic(optional = false)
-    @NotNull
-
-    @Column(name = "nombre")
-    private String nombre;
+    @Column(name = "producto_nombre")
+    private String productoNombre;
     @Basic(optional = false)
-    @NotNull
-
-    @Column(name = "precio")
-    private double precio;
-
-
-    /*public Producto(String nombre, double precio) {
-        this.nombre = nombre;
-        this.precio = precio;
-    }*/
+    @Column(name = "producto_precio")
+    private Double productoPrecio;
+    @Basic(optional = false)
+    @Column(name = "producto_ingreso")
+    private String productoIngreso;
+    @Basic(optional = false)
+    @Column(name = "producto_cantidad")
+    private String productoCantidad;
+    @Basic(optional = false)
+    @Column(name = "producto_descripcion")
+    private String productoDescripcion;
+    @Basic(optional = false)
+    @Column(name = "almacen_id")
+    private int almacenId;
 
 }

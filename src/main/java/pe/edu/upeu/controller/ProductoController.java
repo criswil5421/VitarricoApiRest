@@ -55,16 +55,23 @@ public class ProductoController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody Producto productoDto){
-        if(StringUtils.isBlank(productoDto.getNombre()))
+        if(StringUtils.isBlank(productoDto.getProductoNombre()))
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-        if(Double.isNaN(productoDto.getPrecio()) || productoDto.getPrecio()<0)
+        if(Double.isNaN(productoDto.getProductoPrecio()))
             return new ResponseEntity(new Mensaje("el precio debe ser mayor que 0"), HttpStatus.BAD_REQUEST);
-        if(productoService.existsByNombre(productoDto.getNombre()))
+        if(StringUtils.isBlank(productoDto.getProductoIngreso()))
+            return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+        if(StringUtils.isBlank(productoDto.getProductoCantidad()))
+            return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+        if(StringUtils.isBlank(productoDto.getProductoDescripcion()))
+            return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+        if(Double.isNaN(productoDto.getAlmacenId()))
             return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
-        //Producto producto = new Producto(productoDto.getNombre(), productoDto.getPrecio());
-        //productoService.save(producto);
-        productoService.save(productoDto);
-        return new ResponseEntity(new Mensaje("producto creado"), HttpStatus.OK);
+        if(productoService.existsByNombre(productoDto.getProductoNombre()))
+            return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
+
+            productoService.save(productoDto);
+        return new ResponseEntity(new Mensaje("Producto1 creado"), HttpStatus.OK);
     }
 
     //@PreAuthorize("hasRole('ADMIN')")
@@ -72,18 +79,30 @@ public class ProductoController {
     public ResponseEntity<?> update(@PathVariable("id")int id, @RequestBody Producto productoDto){
         if(!productoService.existsById(id))
             return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-        if(productoService.existsByNombre(productoDto.getNombre()) && productoService.getByNombre(productoDto.getNombre()).get().getId() != id)
+        if(productoService.existsByNombre(productoDto.getProductoNombre()) && productoService.getByNombre(productoDto.getProductoNombre()).get().getProductoId() != id)
             return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
-        if(StringUtils.isBlank(productoDto.getNombre()))
+        if(StringUtils.isBlank(productoDto.getProductoNombre()))
             return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
-        if(Double.isNaN(productoDto.getPrecio()) || productoDto.getPrecio()<0 )
+        if(Double.isNaN(productoDto.getProductoPrecio()))
             return new ResponseEntity(new Mensaje("el precio debe ser mayor que 0"), HttpStatus.BAD_REQUEST);
+        if(StringUtils.isBlank(productoDto.getProductoIngreso()))
+            return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+        if(StringUtils.isBlank(productoDto.getProductoCantidad()))
+            return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+        if(StringUtils.isBlank(productoDto.getProductoDescripcion()))
+            return new ResponseEntity(new Mensaje("el nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+        if(Double.isNaN(productoDto.getAlmacenId()))
+            return new ResponseEntity(new Mensaje("ese nombre ya existe"), HttpStatus.BAD_REQUEST);
 
         Producto producto = productoService.getOne(id).get();
-        producto.setNombre(productoDto.getNombre());
-        producto.setPrecio(productoDto.getPrecio());
+        producto.setProductoNombre(productoDto.getProductoNombre());
+        producto.setProductoPrecio(productoDto.getProductoPrecio());
+        producto.setProductoIngreso(productoDto.getProductoIngreso());
+        producto.setProductoCantidad(productoDto.getProductoCantidad());
+        producto.setProductoDescripcion(productoDto.getProductoDescripcion());
+        producto.setAlmacenId(productoDto.getAlmacenId());
         productoService.save(producto);
-        return new ResponseEntity(new Mensaje("producto actualizado"), HttpStatus.OK);
+        return new ResponseEntity(new Mensaje("Producto1 actualizado"), HttpStatus.OK);
     }
 
     //@PreAuthorize("hasRole('ADMIN')")

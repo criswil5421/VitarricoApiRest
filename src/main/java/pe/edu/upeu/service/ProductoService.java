@@ -24,8 +24,12 @@ public class ProductoService {
         return productoRepository.findById(id);
     }
 
-    public Optional<Producto> getByNombre(String nombre){
-        return productoRepository.findByNombre(nombre);
+    public Optional<Producto> getByNombre(String productoNombre){
+        return productoRepository.findByProductoNombre(productoNombre);
+    }
+
+    public List<Producto> getByNombreLista(String productoNombre){
+        return productoRepository.findByNombrelista(productoNombre);
     }
 
     public void  save(Producto producto){
@@ -40,7 +44,7 @@ public class ProductoService {
         return productoRepository.existsById(id);
     }
 
-    public boolean existsByNombre(String nombre){
-        return productoRepository.existsByNombre(nombre);
+    public boolean existsByNombre(String productoNombre){
+        return productoRepository.existsByProductoNombre(productoNombre);
     }
 }
