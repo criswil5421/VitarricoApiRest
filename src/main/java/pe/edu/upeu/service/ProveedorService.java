@@ -28,6 +28,10 @@ public class ProveedorService {
         return ProveedorRepository.findByProveedorNombre(proveedorNombre);
     }
 
+    public List<Proveedor> getByNombreLista(String proveedorNombre){
+        return ProveedorRepository.findByProveedorNombrelista(proveedorNombre);
+    }
+
     public void  save(Proveedor proveedor){
         ProveedorRepository.save(proveedor);
     }

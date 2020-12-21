@@ -45,12 +45,14 @@ public class ProveedorController {
     }
 
     @GetMapping("/detailname/{nombre}")
-    public ResponseEntity<Proveedor> getByNombre(@PathVariable("nombre") String nombre){
-        if(!ProveedorService.existsByNombre(nombre))
-            return new ResponseEntity(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
-        Proveedor proveedor = ProveedorService.getByNombre(nombre).get();
-        return new ResponseEntity(proveedor, HttpStatus.OK);
+    public ResponseEntity<List<Proveedor>> getByNombreLista(@PathVariable("nombre") String nombre){
+        //Proveedor proveedor = ProveedorService.getByNombre(nombre).get();
+        List<Proveedor> list = ProveedorService.getByNombreLista(nombre);
+        return new ResponseEntity(list, HttpStatus.OK);
+        //return new ResponseEntity(proveedor, HttpStatus.OK);
     }
+
+
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
